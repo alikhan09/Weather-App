@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "weather-app-dev-a6aa7"
-  }
+    "default": "weather-app-dev-a6aa7",
+    "production": "weather-app-prod-530a8"
+  },
+  "targets": {},
+  "etags": {}
 }
