@@ -36,7 +36,7 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}"
           projectId: weather-app-dev-a6aa7
-          entryPoint: myapp
+          entryPoint: myapp/dist
 
       # Deploy PROD
       - name: Deploy to Prod
@@ -46,4 +46,4 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}"
           projectId: weather-app-prod-530a8
-          entryPoint: myapp
+          entryPoint: myapp/dist
