@@ -16,16 +16,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repo
       - uses: actions/checkout@v3
 
-      # Install inside myapp folder
+      # Install dependencies
       - name: Install dependencies
-        working-directory: myapp
         run: npm install
 
-      # Build inside myapp folder
+      # Build Vite app
       - name: Build Vite app
-        working-directory: myapp
         run: npm run build
 
       # Deploy DEV
@@ -36,7 +35,7 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}"
           projectId: weather-app-dev-a6aa7
-          entryPoint: myapp/dist
+          entryPoint: dist  # Vite default build folder
 
       # Deploy PROD
       - name: Deploy to Prod
@@ -46,4 +45,4 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}"
           projectId: weather-app-prod-530a8
-          entryPoint: myapp/dist
+          entryPoint: dist
