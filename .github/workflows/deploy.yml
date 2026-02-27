@@ -1,0 +1,49 @@
+name: Deploy to Firebase
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Install inside myapp folder
+      - name: Install dependencies
+        working-directory: myapp
+        run: npm install
+
+      # Build inside myapp folder
+      - name: Build Vite app
+        working-directory: myapp
+        run: npm run build
+
+      # Deploy DEV
+      - name: Deploy to Dev
+        if: github.event.inputs.environment == 'dev'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}"
+          projectId: weather-app-dev-a6aa7
+          entryPoint: myapp
+
+      # Deploy PROD
+      - name: Deploy to Prod
+        if: github.event.inputs.environment == 'prod'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}"
+          projectId: weather-app-prod-530a8
+          entryPoint: myapp
